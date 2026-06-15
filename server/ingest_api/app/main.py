@@ -19,7 +19,7 @@ from sqlalchemy.orm import Session
 from app.config import get_settings
 from app.db import get_db
 from app.schemas import HealthResponse
-from app.routes import ingest
+from app.routes import dashboard, ingest
 
 _settings = get_settings()
 
@@ -49,6 +49,7 @@ app.add_middleware(
 
 # Mount routers
 app.include_router(ingest.router)
+app.include_router(dashboard.router)
 
 # ─── /health ─────────────────────────────────────────────────────────────────
 @app.get("/health", response_model=HealthResponse, tags=["meta"])
