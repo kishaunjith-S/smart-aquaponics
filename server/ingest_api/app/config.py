@@ -39,6 +39,11 @@ class Settings:
     # Pi ingest
     INGEST_TOKEN: str = _required("INGEST_TOKEN")
 
+# Gemini AI (optional — chatbot tab won't work without it)
+    GEMINI_API_KEY: str | None = os.getenv("GEMINI_API_KEY")
+
+
+
     # CORS
     CORS_ORIGINS: list[str] = [
         origin.strip()

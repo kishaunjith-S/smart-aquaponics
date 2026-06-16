@@ -19,7 +19,7 @@ from sqlalchemy.orm import Session
 from app.config import get_settings
 from app.db import get_db
 from app.schemas import HealthResponse
-from app.routes import auth, dashboard, ingest
+from app.routes import auth, chat, dashboard, ingest
 
 _settings = get_settings()
 
@@ -51,6 +51,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(ingest.router)
 app.include_router(dashboard.router)
+app.include_router(chat.router)
 
 # ─── /health ─────────────────────────────────────────────────────────────────
 @app.get("/health", response_model=HealthResponse, tags=["meta"])

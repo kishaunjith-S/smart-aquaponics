@@ -148,3 +148,13 @@ class ApiKeyOut(BaseModel):
 class ApiKeyCreated(ApiKeyOut):
     """Returned ONCE at creation — includes the plaintext key."""
     key: str = Field(..., description="Full API key — shown only once, store securely.")
+
+
+# ─── Chat ───────────────────────────────────────────────────────────────────
+
+class ChatRequest(BaseModel):
+    prompt: str = Field(..., min_length=1, max_length=4000, description="User's message to the assistant")
+
+
+class ChatResponse(BaseModel):
+    response: str = Field(..., description="The assistant's reply (Markdown formatted)")
