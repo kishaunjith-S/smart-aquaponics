@@ -75,3 +75,35 @@ class Reading1Min(Base):
     do_min:   Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     do_max:   Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     do_count: Mapped[int]             = mapped_column(Integer, nullable=False)
+
+
+# ─── Auth ───────────────────────────────────────────────────────────────────
+
+from uuid import UUID, uuid4
+from sqlalchemy import Boolean, ForeignKey, Text
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id:            Mapped[UUID]     = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
+    full_name:     Mapped[str]      = mapped_column(Text, nullable=False)
+    email:         Mapped[str]      = mapped_column(Text, unique=True, nullable=False, index=True)
+    password_hash: Mapped[str]      = mapped_column(Text, nullable=False)
+    is_admin:      Mapped[bool]     = mapped_column(Boolean, nullable=False, default=False)
+    created_at:    Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at:    Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())
+
+
+class ApiKey(Base):
+    __tablename__ = "api_keys"
+
+    id:           Mapped[UUID]     = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
+    user_id:      Mapped[UUID]     = mapped_column(PG_UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    name:         Mapped[str]      = mapped_column(Text, nullable=False)
+    key_hash:     Mapped[str]      = mapped_column(Text, nullable=False, unique=True)
+    key_prefix:   Mapped[str]      = mapped_column(Text, nullable=False)
+    is_active:    Mapped[bool]     = mapped_column(Boolean, nullable=False, default=True)
+    created_at:   Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    last_used_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)

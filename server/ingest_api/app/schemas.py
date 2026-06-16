@@ -93,3 +93,58 @@ class HistoryResponse(BaseModel):
     total:   int
 
     model_config = ConfigDict(from_attributes=True)
+
+
+# ─── Auth ───────────────────────────────────────────────────────────────────
+
+from uuid import UUID
+from pydantic import EmailStr
+
+
+class UserCreate(BaseModel):
+    full_name: str          = Field(..., min_length=1, max_length=120)
+    email:     EmailStr
+    password:  str          = Field(..., min_length=8, max_length=128)
+
+
+class UserLogin(BaseModel):
+    email:    EmailStr
+    password: str
+
+
+class UserOut(BaseModel):
+    id:         UUID
+    full_name:  str
+    email:      EmailStr
+    is_admin:   bool
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type:   str = "bearer"
+
+
+# ─── API Keys ───────────────────────────────────────────────────────────────
+
+class ApiKeyCreate(BaseModel):
+    name: str = Field(..., min_length=1, max_length=100)
+
+
+class ApiKeyOut(BaseModel):
+    """API key as shown in the list view — no plaintext."""
+    id:           UUID
+    name:         str
+    key_prefix:   str
+    is_active:    bool
+    created_at:   datetime
+    last_used_at: Optional[datetime] = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ApiKeyCreated(ApiKeyOut):
+    """Returned ONCE at creation — includes the plaintext key."""
+    key: str = Field(..., description="Full API key — shown only once, store securely.")

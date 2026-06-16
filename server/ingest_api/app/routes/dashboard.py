@@ -20,8 +20,10 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.auth import get_current_user
 from app.db import get_db
-from app.models import Reading, Reading1Min
+from app.models import Reading, Reading1Min, User
+
 from app.schemas import (
     HistoryResponse,
     IndividualScores,
@@ -67,8 +69,12 @@ def _build_record(
 @router.get(
     "/latest",
     response_model=LatestResponse,
+    dependencies=[Depends(get_current_user)],
     summary="Get the most recent reading with WQI scores",
 )
+
+
+
 def get_latest(
     device_id: Optional[str] = Query(
         None,
@@ -108,8 +114,11 @@ def get_latest(
 @router.get(
     "/history",
     response_model=HistoryResponse,
+    dependencies=[Depends(get_current_user)],
     summary="Get the last N minute-bucket rollups with WQI scores",
 )
+
+
 def get_history(
     device_id: Optional[str] = Query(None, description="Filter to one device."),
     limit: int = Query(
