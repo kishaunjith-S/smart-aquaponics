@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Smart Aquaponics Monitoring</title>
+
+<link rel="stylesheet" href="/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>SMART AQUAPONICS MONITORING</h1>
+
+</div>
+
+<div class="live-grid">
+
+    <div class="live-card">
+        <div class="label">pH</div>
+        <div id="phValue" class="value">0.00</div>
+    </div>
+
+    <div class="live-card">
+        <div class="label">EC</div>
+        <div id="ecValue" class="value">0.00</div>
+    </div>
+
+    <div class="live-card">
+        <div class="label">NTU</div>
+        <div id="ntuValue" class="value">0.00</div>
+    </div>
+
+    <div class="live-card">
+        <div class="label">Water Temp</div>
+        <div id="wtValue" class="value">0.00 °C</div>
+    </div>
+
+    <div class="live-card">
+        <div class="label">DO</div>
+        <div id="doValue" class="value">--</div>
+    </div>
+
+    <div class="live-card">
+        <div class="label">Last Update</div>
+        <div id="lastUpdate" class="value small">
+            Waiting...
+        </div>
+    </div>
+
+</div>
+
+<div class="chart-grid">
+
+    <div class="chart-card">
+        <h3>pH Trend</h3>
+        <canvas id="phChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+        <h3>EC Trend</h3>
+        <canvas id="ecChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+        <h3>NTU Trend</h3>
+        <canvas id="ntuChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+        <h3>Water Temperature Trend</h3>
+        <canvas id="wtChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+        <h3>DO Trend</h3>
+        <canvas id="doChart"></canvas>
+    </div>
+
+    <div class="chart-card status-card">
+
+        <h3>System Status</h3>
+
+        <div id="status">
+            Arduino Connected
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/script.js"></script>
+
+</body>
+</html>

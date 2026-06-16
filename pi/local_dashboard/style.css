@@ -1,0 +1,83 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#121212;
+    color:white;
+    font-family:Arial,sans-serif;
+    padding:15px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.header h1{
+    font-size:30px;
+}
+
+.live-grid{
+    display:grid;
+    grid-template-columns: repeat(6,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.live-card{
+    background:#1e1e1e;
+    border-radius:12px;
+    padding:12px;
+    text-align:center;
+}
+
+.label{
+    color:#aaa;
+    font-size:14px;
+}
+
+.value{
+    margin-top:8px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.small{
+    font-size:18px;
+}
+
+.chart-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 240px 240px 240px;
+    gap:15px;
+}
+
+.chart-card{
+    background:#1e1e1e;
+    border-radius:12px;
+    padding:10px;
+}
+
+.chart-card h3{
+    text-align:center;
+    margin-bottom:5px;
+}
+
+.status-card{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    font-weight:bold;
+    color:#00ff88;
+}
+
+canvas{
+    width:100% !important;
+    height:180px !important;
+}
