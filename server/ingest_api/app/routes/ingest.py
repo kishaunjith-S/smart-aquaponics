@@ -8,31 +8,67 @@ from __future__ import annotations
 
 import logging
 
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, Header, HTTPException, status
+from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import Session
 
+from app.auth import hash_api_key
 from app.config import get_settings
 from app.db import get_db
-from app.models import Reading
+from app.models import ApiKey, Reading
 from app.schemas import IngestRequest, IngestResponse
+
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/v1", tags=["ingest"])
 
 
-def verify_ingest_token(authorization: str = Header(default="")) -> None:
-    """Verify the Authorization: Bearer <INGEST_TOKEN> header."""
-    expected = get_settings().INGEST_TOKEN
+def verify_ingest_token(
+    authorization: str = Header(default=""),
+    db: Session = Depends(get_db),
+) -> None:
+    """
+    Verify the Authorization header. Accepts either:
+      1. Bearer <INGEST_TOKEN>  — the shared bootstrap token (legacy)
+      2. Bearer <api_key>       — a user-issued API key from /api-keys
+
+    On API key match, updates last_used_at for usage tracking.
+    """
     scheme, _, token = authorization.partition(" ")
-    if scheme.lower() != "bearer" or token != expected:
+    if scheme.lower() != "bearer" or not token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or missing ingest token",
+            detail="Missing bearer token",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    # Path 1: shared INGEST_TOKEN — fast string compare
+    if token == get_settings().INGEST_TOKEN:
+        return
+
+    # Path 2: API key lookup by SHA-256 hash
+    key_hash = hash_api_key(token)
+    api_key = db.execute(
+        select(ApiKey).where(
+            ApiKey.key_hash == key_hash,
+            ApiKey.is_active.is_(True),
+        )
+    ).scalar_one_or_none()
+
+    if api_key is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or revoked bearer token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    # Update last_used_at (fire-and-forget — failure here shouldn't reject the ingest)
+    api_key.last_used_at = datetime.now(timezone.utc)
+    db.commit()
 
 @router.post(
     "/ingest",
