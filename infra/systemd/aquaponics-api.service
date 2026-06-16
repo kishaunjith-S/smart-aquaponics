@@ -1,0 +1,35 @@
+[Unit]
+Description=Aquaponics FastAPI service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/aquaponics/server/ingest_api
+EnvironmentFile=/home/ubuntu/aquaponics/server/ingest_api/.env
+
+# 2 workers is right for t3.micro — more would oversubscribe CPU
+ExecStart=/home/ubuntu/aquaponics/server/ingest_api/venv/bin/gunicorn \
+    --workers 2 \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --bind 0.0.0.0:5001 \
+    --access-logfile - \
+    --error-logfile - \
+    --timeout 60 \
+    app.main:app
+
+# Restart 5s after any crash; cap restarts at 5/60s to avoid loops on broken config
+Restart=on-failure
+RestartSec=5
+StartLimitInterval=60
+StartLimitBurst=5
+
+# Logs go to journalctl
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aquaponics-api
+
+[Install]
+WantedBy=multi-user.target
