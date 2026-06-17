@@ -20,9 +20,9 @@ import {
 
 const NAV_LINKS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  // { href: '/prediction', label: 'Prediction', icon: TrendingUp },
-  { href: '/chatbot', label: 'Chatbot', icon: MessageSquare },
-  { href: '/api-keys', label: 'API Keys', icon: KeyRound },
+  { href: '/trends',    label: 'Trends',    icon: TrendingUp },
+  { href: '/chatbot',   label: 'Chatbot',   icon: MessageSquare },
+  { href: '/api-keys',  label: 'API Keys',  icon: KeyRound },
 ];
 
 function NavLink({ href, label, icon: Icon, pathname, onClick }) {

@@ -87,6 +87,20 @@ export const getWaterQualityHistory = async (limit = 200) => {
   }
 };
 
+
+export const getTrends = async (range = '24h') => {
+  try {
+    const response = await api.get(
+      `/api/trends?range=${encodeURIComponent(range)}`,
+      { headers: { ...getAuthHeader() } }
+    );
+    return response.data; // { range, since, count, points }
+  } catch (error) {
+    if (error.response?.status === 401) localStorage.removeItem('accessToken');
+    throw error;
+  }
+};
+
 // ─── API Key Management ────────────────────────────────────────────────────
 
 export const listApiKeys = async () => {
