@@ -9,11 +9,17 @@ Dashboard read endpoints — consumed by the Next.js frontend.
     Last N minute-bucket rollups (from `readings_1min`) with WQI computed
     from the per-minute averages. Default 200 buckets, max 1000.
 
+  GET /api/trends?range=24h&device_id=...
+    Time-series data points (raw values, no WQI) for plotting trend
+    charts. Range options: 1h, 24h, 7d, 30d. Uses raw readings for 1h,
+    1-min rollups for longer ranges.
+
 WQI is calculated at read time, not stored. This lets us retune the
 THRESHOLDS in wqi.py without a schema migration.
 """
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Query
@@ -72,9 +78,6 @@ def _build_record(
     dependencies=[Depends(get_current_user)],
     summary="Get the most recent reading with WQI scores",
 )
-
-
-
 def get_latest(
     device_id: Optional[str] = Query(
         None,
@@ -117,8 +120,6 @@ def get_latest(
     dependencies=[Depends(get_current_user)],
     summary="Get the last N minute-bucket rollups with WQI scores",
 )
-
-
 def get_history(
     device_id: Optional[str] = Query(None, description="Filter to one device."),
     limit: int = Query(
@@ -155,3 +156,99 @@ def get_history(
     ]
 
     return HistoryResponse(records=records, total=len(records))
+
+
+@router.get(
+    "/trends",
+    dependencies=[Depends(get_current_user)],
+    summary="Get time-series data points for trend charts (filtered by time range)",
+)
+def get_trends(
+    range: str = Query(
+        "24h",
+        regex="^(1h|24h|7d|30d)$",
+        description="Time range to fetch: 1h, 24h, 7d, or 30d.",
+    ),
+    device_id: Optional[str] = Query(
+        None,
+        description="Filter to one device. If omitted, returns data across all devices.",
+    ),
+    db: Session = Depends(get_db),
+) -> dict:
+    """
+    Return time-series data points for plotting trend charts.
+
+    For 1h: uses the raw `readings` table (~5s sampling).
+    For 24h / 7d / 30d: uses `readings_1min` rollups — fewer points and
+    faster queries.
+
+    Each point has the timestamp plus raw values for pH, water temperature
+    (wt), EC, NTU and DO. WQI is NOT computed here — the frontend only
+    needs the raw numbers for line charts.
+    """
+    range_to_delta = {
+        "1h": timedelta(hours=1),
+        "24h": timedelta(hours=24),
+        "7d": timedelta(days=7),
+        "30d": timedelta(days=30),
+    }
+    since = datetime.now(timezone.utc) - range_to_delta[range]
+
+    if range == "1h":
+        stmt = (
+            select(Reading)
+            .where(Reading.ts >= since)
+            .order_by(Reading.ts.asc())
+        )
+        if device_id:
+            stmt = (
+                select(Reading)
+                .where(Reading.device_id == device_id, Reading.ts >= since)
+                .order_by(Reading.ts.asc())
+            )
+        rows = db.execute(stmt).scalars().all()
+        points = [
+            {
+                "ts": r.ts.isoformat(),
+                "ph": r.ph,
+                "wt": r.wt,
+                "ec": r.ec,
+                "ntu": r.ntu,
+                "do_val": r.do_val,
+            }
+            for r in rows
+        ]
+    else:
+        stmt = (
+            select(Reading1Min)
+            .where(Reading1Min.bucket >= since)
+            .order_by(Reading1Min.bucket.asc())
+        )
+        if device_id:
+            stmt = (
+                select(Reading1Min)
+                .where(
+                    Reading1Min.device_id == device_id,
+                    Reading1Min.bucket >= since,
+                )
+                .order_by(Reading1Min.bucket.asc())
+            )
+        rows = db.execute(stmt).scalars().all()
+        points = [
+            {
+                "ts": r.bucket.isoformat(),
+                "ph": r.ph_avg,
+                "wt": r.wt_avg,
+                "ec": r.ec_avg,
+                "ntu": r.ntu_avg,
+                "do_val": r.do_avg,
+            }
+            for r in rows
+        ]
+
+    return {
+        "range": range,
+        "since": since.isoformat(),
+        "count": len(points),
+        "points": points,
+    }
