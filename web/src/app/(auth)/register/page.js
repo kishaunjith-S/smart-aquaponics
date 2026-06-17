@@ -66,17 +66,17 @@ export default function RegisterPage() {
       <div className="w-full max-w-4xl rounded-2xl border border-[hsl(var(--border))] overflow-hidden shadow-2xl shadow-black/10 dark:shadow-black/40 flex">
 
         {/* ── Left branding panel ─────────────────────────────── */}
-        <div className="hidden lg:flex w-5/12 flex-col justify-between bg-gradient-to-br from-slate-900 via-blue-950 to-cyan-900 p-10 relative overflow-hidden">
-          <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="hidden lg:flex w-5/12 flex-col justify-between bg-gradient-to-br from-slate-900 via-blue-950 to-teal-900 p-10 relative overflow-hidden">
+          <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-teal-500/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
 
           {/* Logo
           <div className="relative flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 shadow-md shadow-cyan-500/30">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-400 to-blue-500 shadow-md shadow-teal-500/30">
               <Waves className="h-4 w-4 text-white" />
             </div>
             <span className="text-lg font-bold text-white tracking-tight">
-              Aqua<span className="text-cyan-400">Tracker</span>
+              Aqua<span className="text-teal-400">Tracker</span>
             </span>
           </div> */}
 
@@ -84,7 +84,7 @@ export default function RegisterPage() {
           <div className="relative space-y-5">
             <div>
               <h2 className="text-3xl font-extrabold text-white leading-tight">Start for free.</h2>
-              <h2 className="text-3xl font-extrabold text-cyan-400 leading-tight">No setup needed.</h2>
+              <h2 className="text-3xl font-extrabold text-teal-400 leading-tight">No setup needed.</h2>
             </div>
             <p className="text-sm text-slate-300 leading-relaxed">
               Gain instant access to AI-powered water quality forecasting for your environment.
@@ -107,7 +107,7 @@ export default function RegisterPage() {
 
           {/* Trust badge */}
           <div className="relative flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
-            <ShieldCheck className="h-5 w-5 shrink-0 text-cyan-400" />
+            <ShieldCheck className="h-5 w-5 shrink-0 text-teal-400" />
             <div>
               <p className="text-xs font-semibold text-white">Secure & Private</p>
               <p className="text-[10px] text-slate-400">Your data is encrypted and never shared.</p>
@@ -121,11 +121,11 @@ export default function RegisterPage() {
 
             {/* Mobile logo */}
             <div className="flex lg:hidden items-center gap-2 mb-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600">
                 <Waves className="h-4 w-4 text-white" />
               </div>
               <span className="font-bold text-[hsl(var(--foreground))]">
-                Aqua<span className="text-cyan-600">Tracker</span>
+                Aqua<span className="text-teal-600">Tracker</span>
               </span>
             </div>
 
@@ -142,7 +142,7 @@ export default function RegisterPage() {
                   <User className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(var(--muted-foreground))]" />
                   <input id="full-name" type="text" required autoComplete="name" placeholder="John Doe"
                     value={fullName} onChange={(e) => setFullName(e.target.value)}
-                    className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] py-2.5 pl-10 pr-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20"
+                    className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] py-2.5 pl-10 pr-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none transition-all focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 dark:focus:border-teal-400 dark:focus:ring-teal-400/20"
                   />
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function RegisterPage() {
                   <Mail className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(var(--muted-foreground))]" />
                   <input id="email" type="email" required autoComplete="email" placeholder="you@example.com"
                     value={email} onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] py-2.5 pl-10 pr-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20"
+                    className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] py-2.5 pl-10 pr-4 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none transition-all focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 dark:focus:border-teal-400 dark:focus:ring-teal-400/20"
                   />
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default function RegisterPage() {
                   <input id="password" type={showPassword ? 'text' : 'password'} required
                     autoComplete="new-password" placeholder="Create a strong password"
                     value={password} onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] py-2.5 pl-10 pr-10 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20"
+                    className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] py-2.5 pl-10 pr-10 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none transition-all focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 dark:focus:border-teal-400 dark:focus:ring-teal-400/20"
                   />
                   <button type="button" tabIndex={-1} onClick={() => setShowPassword((v) => !v)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
@@ -188,7 +188,7 @@ export default function RegisterPage() {
                     className={`w-full rounded-lg border bg-[hsl(var(--background))] py-2.5 pl-10 pr-10 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none transition-all focus:ring-2
                       ${passwordMismatch ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20'
                         : passwordMatch ? 'border-emerald-400 focus:border-emerald-400 focus:ring-emerald-400/20'
-                        : 'border-[hsl(var(--border))] focus:border-cyan-500 focus:ring-cyan-500/20 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20'}`}
+                        : 'border-[hsl(var(--border))] focus:border-teal-500 focus:ring-teal-500/20 dark:focus:border-teal-400 dark:focus:ring-teal-400/20'}`}
                   />
                   <button type="button" tabIndex={-1} onClick={() => setShowConfirm((v) => !v)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors">
@@ -207,7 +207,7 @@ export default function RegisterPage() {
               )}
 
               <button type="submit" disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 disabled:opacity-60 disabled:cursor-not-allowed px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-cyan-600/20 transition-all duration-150">
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-teal-600 hover:bg-teal-500 disabled:opacity-60 disabled:cursor-not-allowed px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-teal-600/20 transition-all duration-150">
                 {loading
                   ? <><span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />Creating account…</>
                   : <>Create Account <ArrowRight className="h-4 w-4" /></>}
@@ -221,15 +221,15 @@ export default function RegisterPage() {
             </div>
 
             <Link href="/login"
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-transparent hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400 px-4 py-2.5 text-sm font-medium text-[hsl(var(--foreground))] transition-all duration-150">
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-transparent hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 px-4 py-2.5 text-sm font-medium text-[hsl(var(--foreground))] transition-all duration-150">
               Sign in instead
             </Link>
 
             <p className="text-center text-xs text-[hsl(var(--muted-foreground))]">
               By creating an account you agree to our{' '}
-              <span className="underline underline-offset-2 cursor-pointer hover:text-cyan-600">Terms of Service</span>
+              <span className="underline underline-offset-2 cursor-pointer hover:text-teal-600">Terms of Service</span>
               {' '}and{' '}
-              <span className="underline underline-offset-2 cursor-pointer hover:text-cyan-600">Privacy Policy</span>.
+              <span className="underline underline-offset-2 cursor-pointer hover:text-teal-600">Privacy Policy</span>.
             </p>
           </div>
         </div>

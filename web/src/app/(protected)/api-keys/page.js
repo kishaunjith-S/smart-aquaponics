@@ -32,8 +32,8 @@ function KeyRow({ apiKey, onRevoke }) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-3">
       <div className="flex items-start gap-3 min-w-0">
-        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-50 dark:bg-cyan-950/40">
-          <KeyRound className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-50 dark:bg-teal-950/40">
+          <KeyRound className="h-4 w-4 text-teal-600 dark:text-teal-400" />
         </div>
         <div className="min-w-0">
           <p className="font-semibold text-sm text-[hsl(var(--foreground))] truncate">{apiKey.name}</p>
@@ -162,7 +162,7 @@ Content-Type: application/json
           </code>
         </div>
 
-        <Button className="w-full bg-cyan-600 hover:bg-cyan-500 text-white" onClick={onClose}>
+        <Button className="w-full bg-teal-600 hover:bg-teal-500 text-white" onClick={onClose}>
           Done — I've saved my key
         </Button>
       </div>
@@ -232,7 +232,7 @@ export default function ApiKeysPage() {
         </div>
         <Button
           onClick={() => setShowForm((v) => !v)}
-          className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white shrink-0"
+          className="flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white shrink-0"
         >
           <Plus className="h-4 w-4" />
           New API Key
@@ -259,7 +259,7 @@ export default function ApiKeysPage() {
                 />
               </div>
               <div className="flex items-end gap-2">
-                <Button type="submit" disabled={creating} className="bg-cyan-600 hover:bg-cyan-500 text-white">
+                <Button type="submit" disabled={creating} className="bg-teal-600 hover:bg-teal-500 text-white">
                   {creating ? 'Generating…' : 'Generate Key'}
                 </Button>
                 <Button type="button" variant="outline" onClick={() => setShowForm(false)}>
@@ -297,7 +297,7 @@ export default function ApiKeysPage() {
               <Button
                 size="sm"
                 onClick={() => setShowForm(true)}
-                className="bg-cyan-600 hover:bg-cyan-500 text-white"
+                className="bg-teal-600 hover:bg-teal-500 text-white"
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" /> Create your first key
               </Button>

@@ -88,7 +88,7 @@ export default function PredictionPage() {
 
       {/* ── Page header ──────────────────────────────── */}
       <div className="flex items-center gap-3 mb-8">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-sm shadow-cyan-500/20">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm shadow-teal-500/20">
           <TrendingUp className="h-5 w-5 text-white" />
         </div>
         <div>
@@ -104,8 +104,8 @@ export default function PredictionPage() {
           {/* Card header */}
           <div className="border-b border-[hsl(var(--border))] px-6 py-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-50 dark:bg-cyan-950/40">
-                <Zap className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-50 dark:bg-teal-950/40">
+                <Zap className="h-5 w-5 text-teal-600 dark:text-teal-400" />
               </div>
               <div>
                 <h2 className="text-base font-semibold text-[hsl(var(--foreground))]">Live 24-Hour Forecast</h2>
@@ -116,8 +116,8 @@ export default function PredictionPage() {
 
           <div className="px-6 py-5">
             {/* Info box */}
-            <div className="rounded-lg border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/30 px-4 py-3 mb-5">
-              <p className="text-xs text-cyan-700 dark:text-cyan-300 leading-relaxed">
+            <div className="rounded-lg border border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-950/30 px-4 py-3 mb-5">
+              <p className="text-xs text-teal-700 dark:text-teal-300 leading-relaxed">
                 Generates a <strong>24-hour forecast</strong> for pH, Dissolved Oxygen, Nitrate, and Ammonia using the latest real-time data from your sensors.
               </p>
             </div>
@@ -125,7 +125,7 @@ export default function PredictionPage() {
             <button
               onClick={handleGetLivePrediction}
               disabled={isLoadingLive}
-              className="inline-flex items-center gap-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 disabled:opacity-60 disabled:cursor-not-allowed px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-cyan-600/20 transition-all duration-150 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-lg bg-teal-600 hover:bg-teal-500 disabled:opacity-60 disabled:cursor-not-allowed px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-teal-600/20 transition-all duration-150 hover:-translate-y-0.5"
             >
               {isLoadingLive
                 ? <><Loader2 className="h-4 w-4 animate-spin" /> Generating…</>
@@ -166,7 +166,7 @@ export default function PredictionPage() {
                   max={168}
                   value={hours}
                   onChange={(e) => setHours(parseInt(e.target.value, 10) || 24)}
-                  className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-2 text-sm text-[hsl(var(--foreground))] outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20 transition-all"
+                  className="w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-2 text-sm text-[hsl(var(--foreground))] outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 dark:focus:border-teal-400 dark:focus:ring-teal-400/20 transition-all"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[hsl(var(--muted-foreground))]">hrs</span>
               </div>
@@ -185,10 +185,10 @@ export default function PredictionPage() {
                 className={cn(
                   'relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-8 text-center cursor-pointer transition-all duration-150',
                   dragOver
-                    ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30'
+                    ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/30'
                     : file
                     ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-950/20'
-                    : 'border-[hsl(var(--border))] hover:border-cyan-400 hover:bg-[hsl(var(--accent))]/30'
+                    : 'border-[hsl(var(--border))] hover:border-teal-400 hover:bg-[hsl(var(--accent))]/30'
                 )}
               >
                 {file ? (

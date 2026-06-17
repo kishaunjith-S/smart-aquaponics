@@ -35,8 +35,8 @@ function NavLink({ href, label, icon: Icon, pathname, onClick }) {
         after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:transition-all after:duration-150
         ${
           isActive
-            ? 'text-cyan-600 dark:text-cyan-400 after:bg-cyan-600 dark:after:bg-cyan-400'
-            : 'text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 after:bg-transparent hover:after:bg-cyan-200 dark:hover:after:bg-cyan-800'
+            ? 'text-teal-600 dark:text-teal-400 after:bg-teal-600 dark:after:bg-teal-400'
+            : 'text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 after:bg-transparent hover:after:bg-teal-200 dark:hover:after:bg-teal-800'
         }`}
     >
       <Icon className="h-4 w-4 shrink-0" />
@@ -76,11 +76,11 @@ export default function Navbar() {
               href={user ? '/dashboard' : '/'}
               className="flex shrink-0 items-center gap-2.5 group"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 shadow-sm shadow-cyan-500/30 group-hover:shadow-cyan-500/50 transition-shadow">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm shadow-teal-500/30 group-hover:shadow-teal-500/50 transition-shadow">
                 <Waves className="h-4 w-4 text-white" />
               </div>
               <span className="text-base font-bold tracking-tight text-[hsl(var(--foreground))]">
-                Aqua<span className="text-cyan-600 dark:text-cyan-400">Tracker</span>
+                Aqua<span className="text-teal-600 dark:text-teal-400">Tracker</span>
               </span>
             </Link>
 
@@ -106,9 +106,9 @@ export default function Navbar() {
                         e.stopPropagation();
                         setUserMenuOpen((v) => !v);
                       }}
-                      className="flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-3 py-1.5 text-sm font-medium text-[hsl(var(--foreground))] hover:border-cyan-300 dark:hover:border-cyan-700 hover:bg-[hsl(var(--accent))] transition-all duration-150"
+                      className="flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-3 py-1.5 text-sm font-medium text-[hsl(var(--foreground))] hover:border-teal-300 dark:hover:border-teal-700 hover:bg-[hsl(var(--accent))] transition-all duration-150"
                     >
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-[10px] font-bold text-white uppercase">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-[10px] font-bold text-white uppercase">
                         {user.email?.[0] ?? 'U'}
                       </div>
                       <span className="max-w-[120px] truncate">{user.email}</span>
@@ -155,13 +155,13 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/login"
-                    className="hidden sm:inline-flex items-center rounded-lg border border-[hsl(var(--border))] bg-transparent px-4 py-2 text-sm font-medium text-[hsl(var(--foreground))] hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-150"
+                    className="hidden sm:inline-flex items-center rounded-lg border border-[hsl(var(--border))] bg-transparent px-4 py-2 text-sm font-medium text-[hsl(var(--foreground))] hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 transition-all duration-150"
                   >
                     Sign In
                   </Link>
                   <Link
                     href="/register"
-                    className="inline-flex items-center rounded-lg bg-cyan-600 hover:bg-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-cyan-600/20 hover:shadow-cyan-500/30 transition-all duration-150"
+                    className="inline-flex items-center rounded-lg bg-teal-600 hover:bg-teal-500 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-teal-600/20 hover:shadow-teal-500/30 transition-all duration-150"
                   >
                     Get Started
                   </Link>
@@ -185,11 +185,11 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300'
+                      ? 'bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300'
                       : 'text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))]'
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400'}`} />
+                  <Icon className={`h-4 w-4 ${isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-400'}`} />
                   {label}
                 </Link>
               );

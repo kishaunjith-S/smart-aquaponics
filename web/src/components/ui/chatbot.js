@@ -39,7 +39,7 @@ function TypingDots() {
 
 function BotAvatar() {
   return (
-    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 shadow-sm">
+    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm">
       <Waves className="h-4 w-4 text-white" />
     </div>
   );
@@ -65,7 +65,7 @@ function FileChip({ file, onRemove }) {
       {isImage ? (
         <img src={previewUrl} alt={file.name} className="h-6 w-6 rounded object-cover shrink-0" />
       ) : (
-        <FileText className="h-4 w-4 text-cyan-500 shrink-0" />
+        <FileText className="h-4 w-4 text-teal-500 shrink-0" />
       )}
       <span className="max-w-[120px] truncate text-[hsl(var(--foreground))]">{file.name}</span>
       <button
@@ -205,7 +205,7 @@ export default function Chatbot() {
 
       {/* ── Header ──────────────────────────────────── */}
       <div className="flex items-center gap-3 border-b border-[hsl(var(--border))] px-5 py-4 bg-[hsl(var(--card))]">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-sm shadow-cyan-500/20">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm shadow-teal-500/20">
           <Waves className="h-4 w-4 text-white" />
         </div>
         <div>
@@ -216,7 +216,7 @@ export default function Chatbot() {
           </p>
         </div>
         <div className="ml-auto flex items-center gap-1.5 rounded-full bg-[hsl(var(--muted))] px-2.5 py-1">
-          <Sparkles className="h-3 w-3 text-cyan-500" />
+          <Sparkles className="h-3 w-3 text-teal-500" />
           <span className="text-[10px] font-semibold text-[hsl(var(--muted-foreground))] uppercase tracking-wide">AI</span>
         </div>
       </div>
@@ -231,7 +231,7 @@ export default function Chatbot() {
               <button
                 key={s}
                 onClick={() => handleSend(s)}
-                className="rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-1.5 text-xs font-medium text-[hsl(var(--muted-foreground))] hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                className="rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-1.5 text-xs font-medium text-[hsl(var(--muted-foreground))] hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
               >
                 {s}
               </button>
@@ -251,7 +251,7 @@ export default function Chatbot() {
                 className={cn(
                   'rounded-2xl px-4 py-3 text-sm leading-relaxed',
                   msg.sender === 'user'
-                    ? 'bg-cyan-600 text-white rounded-tr-sm shadow-sm'
+                    ? 'bg-teal-600 text-white rounded-tr-sm shadow-sm'
                     : msg.isError
                     ? 'bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-400 rounded-tl-sm'
                     : 'bg-[hsl(var(--muted))]/60 dark:bg-[hsl(var(--muted))]/40 text-[hsl(var(--foreground))] rounded-tl-sm'
@@ -273,7 +273,7 @@ export default function Chatbot() {
                       '[&_code]:bg-black/10 dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono',
                       '[&_pre]:bg-black/10 dark:[&_pre]:bg-white/10 [&_pre]:p-2 [&_pre]:rounded [&_pre]:overflow-x-auto [&_pre]:my-2',
                       '[&_blockquote]:border-l-4 [&_blockquote]:border-current/20 [&_blockquote]:pl-3 [&_blockquote]:my-2 [&_blockquote]:italic [&_blockquote]:opacity-80',
-                      '[&_a]:text-cyan-600 dark:[&_a]:text-cyan-400 [&_a]:underline',
+                      '[&_a]:text-teal-600 dark:[&_a]:text-teal-400 [&_a]:underline',
                       '[&_table]:w-full [&_table]:my-2 [&_table]:border-collapse [&_table]:text-xs',
                       '[&_th]:border [&_th]:border-[hsl(var(--border))] [&_th]:p-1.5 [&_th]:text-left [&_th]:font-semibold [&_th]:bg-[hsl(var(--muted))]/50',
                       '[&_td]:border [&_td]:border-[hsl(var(--border))] [&_td]:p-1.5',
@@ -291,7 +291,7 @@ export default function Chatbot() {
                 {msg.sender === 'bot' && !msg.isError && (
                   <button
                     onClick={() => handleCopy(msg.text, msg.id)}
-                    className="flex items-center gap-1 text-[10px] text-[hsl(var(--muted-foreground))] hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                    className="flex items-center gap-1 text-[10px] text-[hsl(var(--muted-foreground))] hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                   >
                     {copiedId === msg.id
                       ? <><Check className="h-3 w-3" /> Copied</>
@@ -351,7 +351,7 @@ export default function Chatbot() {
             onClick={() => fileInputRef.current?.click()}
             disabled={isLoading}
             title="Attach image or file"
-            className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--muted-foreground))] hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--muted-foreground))] hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
           >
             <Paperclip className="h-4 w-4" />
           </button>
@@ -370,13 +370,13 @@ export default function Chatbot() {
             placeholder="Ask about water quality, or attach an image/file…"
             disabled={isLoading}
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-4 py-2.5 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 dark:focus:border-cyan-400 dark:focus:ring-cyan-400/20 disabled:opacity-50 transition-all overflow-hidden leading-relaxed"
+            className="flex-1 resize-none rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-4 py-2.5 text-sm text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--muted-foreground))] outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 dark:focus:border-teal-400 dark:focus:ring-teal-400/20 disabled:opacity-50 transition-all overflow-hidden leading-relaxed"
             style={{ minHeight: '42px' }}
           />
           <button
             onClick={() => handleSend()}
             disabled={(!input.trim() && attachedFiles.length === 0) || isLoading}
-            className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed text-white shadow-sm shadow-cyan-600/20 transition-all duration-150 hover:-translate-y-0.5"
+            className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl bg-teal-600 hover:bg-teal-500 disabled:opacity-40 disabled:cursor-not-allowed text-white shadow-sm shadow-teal-600/20 transition-all duration-150 hover:-translate-y-0.5"
           >
             {isLoading
               ? <Loader2 className="h-4 w-4 animate-spin" />

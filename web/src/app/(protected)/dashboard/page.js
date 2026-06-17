@@ -39,6 +39,18 @@ function ScoreCell({ value }) {
   );
 }
 
+function formatIST(ts) {
+  if (!ts) return '—';
+  return new Date(ts).toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
 function fmt(val, decimals = 2) {
   if (val === null || val === undefined) return '—';
   return Number(val).toFixed(decimals);
@@ -76,7 +88,7 @@ function StatusBanner({ latest }) {
                 </span>
               </div>
               <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">
-                Overall WQI · Reading at <span className="font-medium">{timestamp}</span>
+                Overall WQI · Reading at <span className="font-medium">{formatIST(timestamp)}</span>
               </p>
             </div>
           </div>
@@ -152,7 +164,7 @@ export default function DashboardPage() {
         {/* ── Page header ─────────────────────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-sm shadow-cyan-500/20">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm shadow-teal-500/20">
               <Activity className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -172,7 +184,7 @@ export default function DashboardPage() {
           <button
             onClick={handleRefresh}
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-sm font-medium text-[hsl(var(--foreground))] hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400 disabled:opacity-50 transition-all self-start sm:self-auto"
+            className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-sm font-medium text-[hsl(var(--foreground))] hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-50 transition-all self-start sm:self-auto"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
             {loading ? 'Refreshing…' : 'Refresh'}
@@ -193,8 +205,8 @@ export default function DashboardPage() {
         {/* ── Initial loading ──────────────────────────────────────────────── */}
         {loading && !history && (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-50 dark:bg-cyan-950/30">
-              <Loader2 className="h-7 w-7 animate-spin text-cyan-500" />
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-50 dark:bg-teal-950/30">
+              <Loader2 className="h-7 w-7 animate-spin text-teal-500" />
             </div>
             <p className="text-sm text-[hsl(var(--muted-foreground))]">Loading water quality report…</p>
           </div>
@@ -296,7 +308,7 @@ export default function DashboardPage() {
                           key={rec.timestamp + idx}
                           className={`border-b border-[hsl(var(--border))] transition-colors
                             ${isLatest
-                              ? 'bg-cyan-50/60 dark:bg-cyan-950/20 hover:bg-cyan-50 dark:hover:bg-cyan-950/30'
+                              ? 'bg-teal-50/60 dark:bg-teal-950/20 hover:bg-teal-50 dark:hover:bg-teal-950/30'
                               : 'hover:bg-[hsl(var(--muted))]/30'
                             }`}
                         >
@@ -305,7 +317,7 @@ export default function DashboardPage() {
                             {isLatest && (
                               <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse align-middle" />
                             )}
-                            {rec.timestamp}
+                            {formatIST(rec.timestamp)}
                           </td>
 
                           {/* Raw sensor data */}

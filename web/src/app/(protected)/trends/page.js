@@ -55,7 +55,7 @@ export default function TrendsPage() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-sm shadow-cyan-500/20">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-sm shadow-teal-500/20">
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -72,7 +72,7 @@ export default function TrendsPage() {
           <button
             onClick={handleRefresh}
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-sm font-medium text-[hsl(var(--foreground))] hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400 disabled:opacity-50 transition-all self-start sm:self-auto"
+            className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] px-4 py-2 text-sm font-medium text-[hsl(var(--foreground))] hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 disabled:opacity-50 transition-all self-start sm:self-auto"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
             {loading ? 'Refreshing…' : 'Refresh'}
@@ -89,8 +89,8 @@ export default function TrendsPage() {
               disabled={loading}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-all disabled:opacity-50 ${
                 range === opt.value
-                  ? 'bg-cyan-500 text-white shadow-sm'
-                  : 'border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] hover:border-cyan-400'
+                  ? 'bg-teal-500 text-white shadow-sm'
+                  : 'border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] hover:border-teal-400'
               }`}
             >
               {opt.label}
@@ -112,8 +112,8 @@ export default function TrendsPage() {
         {/* Initial loading */}
         {loading && !data && (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-50 dark:bg-cyan-950/30">
-              <Loader2 className="h-7 w-7 animate-spin text-cyan-500" />
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-50 dark:bg-teal-950/30">
+              <Loader2 className="h-7 w-7 animate-spin text-teal-500" />
             </div>
             <p className="text-sm text-[hsl(var(--muted-foreground))]">Loading trends…</p>
           </div>

@@ -22,7 +22,7 @@ export function ThemeToggleButton() {
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label="Toggle theme"
-      className="relative flex h-8 w-[72px] shrink-0 items-center rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--muted))] p-0.5 transition-colors duration-200 hover:border-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/40"
+      className="relative flex h-8 w-[72px] shrink-0 items-center rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--muted))] p-0.5 transition-colors duration-200 hover:border-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/40"
     >
       {/* sliding thumb */}
       <span
@@ -30,7 +30,7 @@ export function ThemeToggleButton() {
           ${isDark ? 'left-[calc(100%-1.875rem)]' : 'left-0.5'}`}
       >
         {isDark
-          ? <Moon className="h-3.5 w-3.5 text-cyan-400" />
+          ? <Moon className="h-3.5 w-3.5 text-teal-400" />
           : <Sun className="h-3.5 w-3.5 text-amber-500" />
         }
       </span>
