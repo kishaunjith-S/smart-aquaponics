@@ -1,62 +1,143 @@
-# Smart Aquaponics Monitoring System (v2)
+# Smart Aquaponics Monitoring System
 
-Cloud-based monitoring and water-quality scoring system for an aquaponics setup.
+A four-tier IoT platform for real-time water-quality monitoring of aquaponics
+systems. Captures pH, temperature, EC, and turbidity from physical sensors on
+a Raspberry Pi, streams to an AWS-hosted FastAPI backend, and presents live
+insights via a Next.js dashboard with an AI-powered diagnostic assistant
+(Google Gemini).
 
-## Architecture
-Arduino sensor hub
+🌐 **Live:** https://smart-aquaponics.vercel.app
 
-│ serial
+## What's in this repo
+arduino/       # Sensor firmware (Arduino Uno, C++)
 
-▼
+pi/            # Raspberry Pi edge gateway (Python, Flask, SQLite)
 
-Raspberry Pi (local Flask dashboard + SQLite buffer + uploader)
+server/        # FastAPI cloud backend (Python, SQLAlchemy, PostgreSQL)
 
-│ HTTPS POST (bearer-token auth)
+web/           # Next.js frontend (React 19, Tailwind 4, recharts)
 
-▼
+infra/         # nginx config, systemd units
 
-EC2 (FastAPI + Nginx)
+docs/          # Architecture, cost analysis, pause/resume runbooks
 
-│
+## How it works
 
-▼
+1. **Arduino** reads pH, EC, water temperature, and turbidity every 5 seconds.
+2. **Raspberry Pi** captures the serial stream, buffers to SQLite (7-day
+   retention), and uploads batches to the cloud every 30 seconds.
+3. **AWS** runs the FastAPI backend on EC2 (gunicorn + nginx + systemd) with
+   PostgreSQL on RDS. CloudFront sits in front for global accessibility on
+   restrictive networks.
+4. **Next.js frontend** on Vercel renders a live dashboard, historical trend
+   charts (1h–30d), an API key manager, and a Gemini-powered chat assistant
+   with live sensor context.
 
-RDS PostgreSQL (raw readings + pg_cron 1-min rollups)
+Full architecture in [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 
-│
+## Key features
 
-▼
+- ✅ **Real-time monitoring** — 5-second sample rate, 1-minute database rollups
+- ✅ **AI diagnostics** — Gemini chat with live sensor context for actionable
+  recommendations
+- ✅ **Trend charts** — 5 parameter charts with configurable time ranges and
+  ideal-range overlays
+- ✅ **Water Quality Index** — aquaponics-specific 0-100 scoring with status
+  banner
+- ✅ **Offline resilience** — Pi buffers up to 7 days of data locally, syncs
+  when network returns
+- ✅ **Secure** — JWT auth, SHA-256 hashed API keys, HTTPS everywhere
+- ✅ **Cloud-resilient** — CloudFront in front of EC2 bypasses restrictive
+  campus/hostel networks
 
-Next.js dashboard (WQI scores + history)
-## Repository layout
+## Tech stack
 
-| Path | Purpose |
+| Layer | Tech |
 |---|---|
-| `arduino/` | Sensor hub firmware (pH, EC, turbidity, water temp) |
-| `pi/` | Pi-side: local dashboard, SQLite buffer, cloud uploader |
-| `server/` | FastAPI backend (ingest API, dashboard API, WQI logic) |
-| `web/` | Next.js dashboard frontend |
-| `server/migrations/` | PostgreSQL schema migrations |
-| `infra/` | Nginx config, systemd units, deployment notes |
-| `docs/` | Architecture diagrams, runbooks, handoff notes |
+| Sensors | Arduino Uno, Atlas Scientific EZO-EC, DS18B20, analog pH/turbidity |
+| Edge | Raspberry Pi 4, Python 3, Flask, pyserial, SQLite |
+| API | FastAPI, SQLAlchemy, gunicorn, uvicorn, nginx |
+| DB | PostgreSQL 16 (RDS) + pg_cron rollups |
+| Frontend | Next.js 16, React 19, Tailwind 4, recharts, shadcn/ui |
+| AI | Google Gemini 2.5 Flash |
+| Auth | JWT (HS256), bcrypt passwords, SHA-256 API keys |
+| Deploy | Vercel (frontend), AWS EC2/RDS (backend) |
+| Region | ap-south-1 (Mumbai) |
 
-## Sensor parameters
+## Quick start (local development)
 
-| Parameter | Unit | WQI ideal range | Notes |
-|---|---|---|---|
-| pH | — | 6.8 – 7.2 | Aquaponic sweet spot |
-| Temperature | °C | 22 – 28 | Suits tilapia + leafy greens |
-| EC (Conductivity) | µS/cm | 800 – 1500 | Nutrient density indicator |
-| Turbidity | NTU | < 5 | Clear water |
-| Dissolved Oxygen | mg/L | > 6 | Placeholder column; probe TBD |
+### Backend
+
+```bash
+cd server/ingest_api
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env       # fill in real secrets
+# Apply migrations against your DB...
+uvicorn app.main:app --reload --port 5001
+```
+
+### Frontend
+
+```bash
+cd web
+pnpm install               # (or npm install)
+cp .env.example .env.local # set NEXT_PUBLIC_API_URL=http://localhost:5001
+pnpm dev
+```
+
+Open http://localhost:3000.
+
+### Pi (when at the tank)
+
+```bash
+cd pi
+pip install -r requirements.txt --break-system-packages
+cp .env.example .env       # fill in INGEST_URL, INGEST_TOKEN, DEVICE_ID
+sudo cp systemd/*.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl start aquaponics-app aquaponics-uploader
+```
+
+## Documentation
+
+| File | What it covers |
+|---|---|
+| [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | System diagram, components, data flow, repo layout |
+| [`docs/COST.md`](./docs/COST.md) | Monthly cost breakdown, pause/resume cost scenarios |
+| [`docs/PAUSE.md`](./docs/PAUSE.md) | Snapshot + terminate runbook (~$2/month cold storage) |
+| [`docs/RESUME.md`](./docs/RESUME.md) | Restore from snapshots runbook (~30-45 min) |
+| [`docs/SECRETS.md`](./docs/SECRETS.md) | Where every credential lives + rotation guide |
+
+## Hardware bill of materials
+
+- Arduino Uno (1x)
+- Raspberry Pi 4 with 16+ GB SD card (1x)
+- Atlas Scientific EZO-EC + K1.0 conductivity probe (1x)
+- DS18B20 waterproof temperature probe (1x)
+- pH probe + signal conditioning circuit (1x)
+- Analog turbidity sensor with TSW-30 module (1x)
+- *Roadmap*: Atlas Scientific EZO-DO + dissolved oxygen probe
+
+## Roadmap
+
+- [ ] Dissolved oxygen sensor (hardware procurement pending)
+- [ ] LSTM-based 24-hour parameter forecasting (data collection in progress)
+- [ ] Email/SMS alerts on threshold violations
+- [ ] Multi-tank support with device grouping
+- [ ] Mobile-responsive PWA improvements
 
 ## Status
 
-v0 — in active development. Cloud infrastructure (EC2 + RDS + pg_cron rollups) is
-provisioned and verified end-to-end with synthetic data.
+This is an active research project at IIT Kharagpur. Not yet production-grade
+for commercial deployment. Issues and contributions welcome.
 
-## Acknowledgments
+## Acknowledgements
 
-Frontend design and overall project structure adapted (with permission) from a peer's
-[BTP project](https://github.com/ashish297/btp-frontend), with the codebase rewritten
-for the aquaponics use case and AWS infrastructure.
+- Frontend foundation adapted with permission from a peer's BTP project
+- Architecture guidance from Prof. Gourav Dhar Bhowmick
+
+## License
+
+MIT (see `LICENSE`)
