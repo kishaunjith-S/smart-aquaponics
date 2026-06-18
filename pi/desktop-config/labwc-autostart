@@ -1,0 +1,15 @@
+#!/bin/sh
+# Wait for systemd services + Flask to be ready
+sleep 15
+
+# Launch Chromium in kiosk mode pointed at the local dashboard
+chromium \
+    --kiosk \
+    --password-store=basic \
+    --noerrdialogs \
+    --no-first-run \
+    --disable-features=TranslateUI \
+    --disable-session-crashed-bubble \
+    --disable-infobars \
+    --start-maximized \
+    http://localhost:5000 &
