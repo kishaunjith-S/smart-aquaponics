@@ -25,20 +25,26 @@ DallasTemperature tempSensor(&oneWire);
 // ------------------------
 float adcToNTU(float adc)
 {
-  if (adc >= 784.9)
+  // 3-point calibration (June 2026, verified against reference meter):
+  //   ADC 750 = 0 NTU   (distilled water)
+  //   ADC 733 = 55 NTU  (milk-water, lab meter reference)
+  //   ADC 657 = 260 NTU (milk-water concentrated, lab meter reference)
+  
+  if (adc >= 750.0)
   {
-    return 0.1 + (2.6 - 0.1) * (798.0 - adc) / (798.0 - 784.9);
+    return 0.0;  // clipping cleaner than distilled = 0
   }
-  else if (adc >= 762.7)
+  else if (adc >= 733.0)
   {
-    return 2.6 + (65.0 - 2.6) * (784.9 - adc) / (784.9 - 762.7);
+    // Low range: 0–55 NTU, slope 3.235 NTU per ADC unit
+    return 3.235 * (750.0 - adc);
   }
   else
   {
-    return 65.0 + (130.0 - 65.0) * (762.7 - adc) / (762.7 - 737.7);
+    // High range: 55+ NTU, slope 2.697 NTU per ADC unit
+    return 55.0 + 2.697 * (733.0 - adc);
   }
 }
-
 void setup()
 {
   Serial.begin(9600);
