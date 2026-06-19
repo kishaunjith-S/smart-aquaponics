@@ -109,6 +109,7 @@ sudo systemctl start aquaponics-app aquaponics-uploader
 | [`docs/PAUSE.md`](./docs/PAUSE.md) | Snapshot + terminate runbook (~$2/month cold storage) |
 | [`docs/RESUME.md`](./docs/RESUME.md) | Restore from snapshots runbook (~30-45 min) |
 | [`docs/SECRETS.md`](./docs/SECRETS.md) | Where every credential lives + rotation guide |
+| [`docs/HARDWARE.md`](./docs/HARDWARE.md) | Wiring diagrams, BOM, calibration procedures, sensor maintenance |
 
 ## Hardware bill of materials
 
