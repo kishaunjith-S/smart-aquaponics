@@ -63,9 +63,9 @@ export default function DeviceStatusBanner({ latestTimestamp, deviceId }) {
   } else {
     const ts = new Date(latestTimestamp).getTime();
     const secondsAgo = Math.max(0, (now - ts) / 1000);
-    if (secondsAgo < 60) status = STATUS.live;
-    else if (secondsAgo < 300) status = STATUS.delayed;
-    else status = STATUS.offline;
+    if (secondsAgo < 90) status = STATUS.live;       // covers 30s upload + 30s poll + slack
+    else if (secondsAgo < 600) status = STATUS.delayed;  // 90s to 10 min — investigating
+    else status = STATUS.offline;                     // > 10 min — definitely down
     detail = `Last reading ${timeAgo(secondsAgo)}${
       deviceId ? ` • Device: ${deviceId}` : ""
     }`;
