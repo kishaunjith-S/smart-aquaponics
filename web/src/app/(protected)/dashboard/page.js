@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getWaterQualityHistory } from '@/lib/api';
 import { Activity, RefreshCw, Loader2, AlertCircle, Droplets } from 'lucide-react';
+import DeviceStatusBanner from "@/components/DeviceStatusBanner";
 
 // ─── Score cell colour ────────────────────────────────────────────────────────
 function scoreClass(score) {
@@ -215,6 +216,11 @@ export default function DashboardPage() {
         {/* ── Content ─────────────────────────────────────────────────────── */}
         {history && (
           <>
+            {/* Device Status Banner — shows Pi online/offline */}
+            <DeviceStatusBanner
+              latestTimestamp={latest?.timestamp}
+              deviceId={latest?.device_id || "pi-01"}
+            />
             {/* Status Banner */}
             {latest && <StatusBanner latest={latest} />}
 
